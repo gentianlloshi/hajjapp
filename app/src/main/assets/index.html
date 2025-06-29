@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="sq" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title data-i18n="app_title">Haxhi dhe Rregullat e Tij</title>
+    
+    <!-- Favicon and PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#005f3c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="apple-touch-icon" href="images/ic_launcher.png">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- App Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-kaaba"></i>
+                <h1 data-i18n="app_title">Hajj Guide</h1>
+            </div>
+            <button id="languageToggle" class="language-toggle" aria-label="Toggle language">
+                <span class="language-code">SQ/EN</span>
+                <i class="fas fa-globe"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="app-container">
+        <!-- Side Navigation -->
+        <nav class="side-nav">
+            <ul>
+                <li>
+                    <button class="nav-button active" data-target="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span data-i18n="dashboard">Kryefaqja</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-button" data-target="prayer-times">
+                        <i class="fas fa-clock"></i>
+                        <span data-i18n="prayer_times">Kohët e Namazit</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-button" data-target="qibla">
+                        <i class="fas fa-compass"></i>
+                        <span data-i18n="qibla_finder">Gjetësi i Kiblës</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-button" data-target="checklist">
+                        <i class="fas fa-tasks"></i>
+                        <span data-i18n="checklist">Lista e Kontrollit</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-button" data-target="map">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span data-i18n="map">Harta</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-button" data-target="guide">
+                        <i class="fas fa-book"></i>
+                        <span data-i18n="guide">Udhëzuesi</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Dashboard View -->
+            <div id="dashboard" class="view active">
+                <h2 data-i18n="welcome">Mirësevini në Udhëzuesin e Haxhit</h2>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card" data-target="prayer-times">
+                        <div class="card-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3 data-i18n="prayer_times">Kohët e Namazit</h3>
+                        <p data-i18n="view_prayer_times">Shikoni kohët e namazit për sot</p>
+                    </div>
+                    
+                    <div class="dashboard-card" data-target="qibla">
+                        <div class="card-icon">
+                            <i class="fas fa-compass"></i>
+                        </div>
+                        <h3 data-i18n="qibla_finder">Gjetësi i Kiblës</h3>
+                        <p data-i18n="find_qibla">Gjeni drejtimin e saktë të Kiblës</p>
+                    </div>
+                    
+                    <div class="dashboard-card" data-target="checklist">
+                        <div class="card-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3 data-i18n="checklist">Lista e Kontrollit</h3>
+                        <p data-i18n="track_progress">Ndiqni progresin tuaj</p>
+                    </div>
+                    
+                    <div class="dashboard-card" data-target="map">
+                        <div class="card-icon">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <h3 data-i18n="map">Harta e Haxhit</h3>
+                        <p data-i18n="explore_map">Eksploroni vendet e shenjta</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prayer Times View -->
+            <div id="prayer-times" class="view">
+                <h2 data-i18n="prayer_times">Kohët e Namazit</h2>
+                <div class="prayer-times-container">
+                    <div id="prayer-times-display">
+                        <p data-i18n="loading_prayer_times">Duke ngarkuar kohët e namazit...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Qibla Finder View -->
+            <div id="qibla" class="view">
+                <h2 data-i18n="qibla_finder">Gjetësi i Kiblës</h2>
+                <div class="qibla-container">
+                    <div class="compass">
+                        <div class="compass-circle">
+                            <div class="compass-arrow"></div>
+                        </div>
+                    </div>
+                    <p data-i18n="allow_location">Ju lutemi lejoni qasjen në vendndodhjen tuaj për të gjetur drejtimin e saktë të Kiblës.</p>
+                </div>
+            </div>
+
+            <!-- Checklist View -->
+            <div id="checklist" class="view">
+                <h2 data-i18n="checklist">Lista e Kontrollit</h2>
+                <div class="checklist-container">
+                    <div class="checklist-category">
+                        <h3 data-i18n="before_travel">Para Udhëtimit</h3>
+                        <div class="checklist-items">
+                            <!-- Checklist items will be added dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Guide View -->
+            <div id="guide" class="view">
+                <h2 data-i18n="guide">Udhëzuesi i Haxhit</h2>
+                <div class="guide-container">
+                    <!-- Guide content will be loaded here -->
+                    <p data-i18n="select_category">Zgjidhni një kategori nga menuja për të parë udhëzimet.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <p data-i18n="app_footer">© 2025 Udhëzuesi i Haxhit - Të gjitha të drejtat e rezervuara</p>
+    </footer>
+
+    <h1>🕋 Haxhi dhe Rregullat e Tij</h1>
+
+    <!-- Interactive Map Section -->
+    <section id="harta">
+      <h2>🗺️ Harta Interaktive e Haxhit</h2>
+      <div class="map-container">
+        <div class="map-tabs">
+          <button class="map-tab active" onclick="showMap('mecca')">Meka</button>
+          <button class="map-tab" onclick="showMap('miqat')">Miqatet</button>
+          <button class="map-tab" onclick="showMap('medina')">Medina</button>
+        </div>
+        <div id="map"></div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="vecorite">
+      <h2>📱 Veçoritë e Aplikacionit</h2>
+      <div class="features-grid">
+        <div class="feature-card" onclick="showPrayerTimes()">
+          <h3>🕐 Kohët e Namazit</h3>
+          <p>Shiko kohët e namazit bazuar në vendndodhjen tuaj</p>
+        </div>
+        <div class="feature-card" onclick="showQiblaFinder()">
+          <h3>🧭 Gjetësi i Kiblës</h3>
+          <p>Gjeni drejtimin e saktë të Kiblës</p>
+        </div>
+        <div class="feature-card" onclick="showChecklist()">
+          <h3>✅ Lista e Kontrollit</h3>
+          <p>Ndiqni progresin tuaj gjatë Haxhit</p>
+        </div>
+        <div class="feature-card" onclick="toggleLanguage()">
+          <h3>🌐 Ndërrimi i Gjuhës</h3>
+          <p>Shqip / English</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="shtyllat">
+      <h2>🏛️ Shtyllat e Islamit</h2>
+      <img src="images/pillars_of_islam.png" alt="Shtyllat e Islamit" loading="lazy">
+      <ul>
+        <li><strong>Dëshmia:</strong> Nuk ka zot tjetër përveç Allahut dhe Muhamedi është i Dërguari i Tij</li>
+        <li><strong>Falja e namazit:</strong> Pesë herë në ditë</li>
+        <li><strong>Dhënia e zekatit:</strong> 2.5% e pasurisë vjetore</li>
+        <li><strong>Agjërimi i Ramazanit:</strong> Një muaj në vit</li>
+        <li><strong>Haxhi në Qabe:</strong> Për ata që kanë mundësi fizike dhe financiare</li>
+      </ul>
+    </section>
+
+    <section id="umra">
+      <h2>🕌 Kryerja e Umres</h2>
+      <img src="images/img2.png" alt="Tavaf" loading="lazy">
+      <ol>
+        <li><strong>Veshja e ihramit:</strong> Në një nga pikat Miqat</li>
+        <li><strong>Kryerja e tavafit:</strong> 7 rrotullime rreth Qabes</li>
+        <li><strong>Ecja mes Safas dhe Mervas (Saji):</strong> 7 herë</li>
+        <li><strong>Qethja apo shkurtimi i flokëve:</strong> Përfundimi i Umres</li>
+      </ol>
+      <img src="images/img3.png" alt="Saji" loading="lazy">
+    </section>
+
+    <section id="haxhi">
+      <h2>🏔️ Etapat Kryesore të Haxhit</h2>
+      <img src="images/img4.png" alt="Arafat" loading="lazy">
+      <ul>
+        <li><strong>Veshja e ihramit:</strong> Në një nga pikat Miqat</li>
+        <li><strong>Qëndrimi në Arafat:</strong> Shtyllë e Haxhit (9 Dhul Hixhe)</li>
+        <li><strong>Qëndrimi në Muzdelife:</strong> Mbledhja e guralecëve</li>
+        <li><strong>Gjuajtja e guralecëve në Mina:</strong> Tre ditë</li>
+        <li><strong>Therja e kurbanit:</strong> Ditën e Kurban Bajramit</li>
+        <li><strong>Tavafi i Ifadas dhe Saji:</strong> Për Temet'tua</li>
+        <li><strong>Tavafi i Lamtumirës:</strong> Para largimit</li>
+      </ul>
+      <img src="images/img5.png" alt="Kurban Bajram" loading="lazy">
+    </section>
+
+    <section id="ihram">
+      <h2>👕 Veshja dhe Ndalesat në Ihram</h2>
+      <img src="images/ihram.png" alt="Ihrami" loading="lazy">
+      <h3>Veshja e Ihramit:</h3>
+      <ul>
+        <li><strong>Për burrat:</strong> Dy copa të bardha të paqëndisura</li>
+        <li><strong>Për gratë:</strong> Rroba të zakonshme që mbulojnë trupin</li>
+      </ul>
+      <img src="images/prohibitions.png" alt="Ndalesat në Ihram" loading="lazy">
+      <h3>Ndalesat gjatë Ihramit:</h3>
+      <ul>
+        <li>Qethja e flokëve dhe thonjve</li>
+        <li>Përdorimi i parfumeve</li>
+        <li>Marrëdhëniet intime</li>
+        <li>Gjuetia e kafshëve</li>
+        <li>Veshja e rrobave të qëndisura (për burrat)</li>
+      </ul>
+    </section>
+
+    <section id="miqatet">
+      <h2>🚪 Edukata e Udhëtimit dhe Miqatet</h2>
+      <img src="images/travel_etiquette.png" alt="Edukata e Udhëtimit" loading="lazy">
+      <img src="images/miqats.jpg" alt="Vendkalimet Miqat" loading="lazy">
+      <h3>Pikat Miqat:</h3>
+      <ul>
+        <li><strong>Dhul Hulaifa:</strong> Për banorët e Medinës</li>
+        <li><strong>Juhfa:</strong> Për ata që vijnë nga Siria</li>
+        <li><strong>Qarn al-Manazil:</strong> Për ata që vijnë nga Najdi</li>
+        <li><strong>Yalamlam:</strong> Për ata që vijnë nga Jemeni</li>
+        <li><strong>Dhat Irq:</strong> Për ata që vijnë nga Iraku</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>📋 Kushtet dhe Detyrimet e Haxhit</h2>
+      <img src="images/hajj_obligation.png" alt="Detyrimet e Haxhit" loading="lazy">
+      <ul>
+        <li><strong>Qëndrimi në Arafat</strong> është shtyllë e Haxhit — pa të, Haxhi është i pavlefshëm.</li>
+        <li><strong>Veshja e ihramit</strong> në vendcaktim është detyrë e domosdoshme.</li>
+        <li><strong>Tavafi i Ifadas, Saj mes Safa-Mervas dhe Tavafi i Lamtumirës</strong> janë të domosdoshëm.</li>
+        <li><strong>Qëndrimi në Muzdelife dhe Mina</strong> për netët e Kurbanit është detyrë.</li>
+        <li><strong>Hedhja e guralecëve dhe therja e kurbanit</strong> (për Temet'tua dhe Kiran) janë pjesë e rëndësishme.</li>
+        <li><strong>Gruaja nuk mund të kryejë Haxhin pa mahram</strong> (afërm të ngushtë).</li>
+      </ul>
+    </section>
+
+    <section id="medina">
+      <h2>🕌 Lutjet dhe Vizitat në Medinë</h2>
+      <img src="images/img12.png" alt="Xhamia e Profetit" loading="lazy">
+      <ul>
+        <li><strong>Lutjet gjatë hyrjes në çdo xhami:</strong> "Eudhu billahil adhīm..."</li>
+        <li><strong>Vizitoni Xhaminë e Profetit</strong> në Medinë dhe falni dy rekate në Raudhah</li>
+        <li><strong>Vizitoni varrin e Profetit Muhamed</strong> dhe përshëndeteni me selam</li>
+        <li><strong>Vizitoni varrezat e Bakias dhe Uhudit</strong></li>
+        <li><strong>Pëlqehet vizita në Xhaminë Kuba</strong> me nijet për shpërblimin e Umres</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>📖 Rregulla të Tjera të Haxhit</h2>
+      <ul>
+        <li><strong>Nijeti</strong> duhet të jetë i sinqertë vetëm për hir të Allahut</li>
+        <li><strong>Paraja për udhëtim</strong> duhet të jetë hallall dhe pa borxhe</li>
+        <li><strong>Gjatë ihramit</strong> ndalohen grindjet, sharjet, dhe çdo veprim mëkatar</li>
+        <li><strong>Gruaja me zakone</strong> nuk kryen tavaf deri sa të pastrohet</li>
+        <li><strong>Lejohet që haxhi të bëhet në emër të dikujt tjetër</strong>, nëse e ke kryer më parë vetë</li>
+      </ul>
+    </section>
+
+    <!-- Prayer Times Modal -->
+    <div id="prayerModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closePrayerTimes()">&times;</span>
+        <h2>🕐 Kohët e Namazit</h2>
+        <div id="prayerTimes">
+          <p>Duke marrë vendndodhjen...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Qibla Finder Modal -->
+    <div id="qiblaModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeQiblaFinder()">&times;</span>
+        <h2>🧭 Gjetësi i Kiblës</h2>
+        <div id="qiblaCompass">
+          <div class="compass">
+            <div class="compass-needle" id="needle"></div>
+            <div class="compass-direction">Kibla</div>
+          </div>
+          <p id="qiblaDirection">Duke përcaktuar drejtimin...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Checklist Modal -->
+    <div id="checklistModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeChecklist()">&times;</span>
+        <h2>✅ Lista e Kontrollit të Haxhit</h2>
+        <div id="hajjChecklist">
+          <!-- Checklist items will be populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="prayer-times.js"></script>
+  <script src="translations.js"></script>
+  <script src="app.js"></script>
+  
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(function(registration) {
+            console.log('ServiceWorker registration successful');
+          }, function(err) {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+      });
+    }
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hajj Guide - Harta</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        #map {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        .map-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .map-button {
+            background: white;
+            border: 2px solid #005f3c;
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+        }
+        .map-button.active {
+            background: #005f3c;
+            color: white;
+        }
+        .back-button {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background: white;
+            border: 2px solid #005f3c;
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .back-button:hover {
+            background: #f0f4f2;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <button class="back-button" id="backButton">
+        <span>←</span>
+        <span data-i18n="back">Kthehu</span>
+    </button>
+    
+    <div class="map-controls">
+        <button class="map-button active" id="btnMecca" data-target="mecca" data-i18n="mecca">Meka</button>
+        <button class="map-button" id="btnMedina" data-target="medina" data-i18n="medina">Medina</button>
+        <button class="map-button" id="btnMiqat" data-target="miqat" data-i18n="miqat">Miqatet</button>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Translations -->
+    <script src="translations.js"></script>
+    
+    <script>
+        // Initialize map
+        const map = L.map('map').setView([21.4225, 39.8262], 13);
+        
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 18
+        }).addTo(map);
+        
+        // Add Kaaba marker
+        const kaabaMarker = L.marker([21.4225, 39.8262]).addTo(map)
+            .bindPopup('<b>Qabja (Haram Sharif)</b><br>Vendi më i shenjtë në Islam');
+        
+        // Back button functionality
+        document.getElementById('backButton').addEventListener('click', function() {
+            window.history.back();
+        });
+        
+        // Map control buttons
+        const buttons = document.querySelectorAll('.map-button');
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                const target = this.getAttribute('data-target');
+                
+                // Update active button
+                buttons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update map view based on selection
+                switch(target) {
+                    case 'mecca':
+                        map.setView([21.4225, 39.8262], 13);
+                        kaabaMarker.openPopup();
+                        break;
+                    case 'medina':
+                        map.setView([24.4672, 39.6117], 13);
+                        break;
+                    case 'miqat':
+                        map.setView([21.5, 40.0], 8);
+                        break;
+                }
+            });
+        });
+        
+        // Set language based on user preference
+        const savedLanguage = localStorage.getItem('hajj_app_language') || 'sq';
+        document.documentElement.lang = savedLanguage;
+        
+        // Update UI with translations
+        if (typeof translationManager !== 'undefined') {
+            translationManager.setLanguage(savedLanguage);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+{
+  "name": "Haxhi dhe Rregullat e Tij",
+  "short_name": "HajjApp",
+  "description": "Aplikacion për udhëzime dhe rregulla të Haxhit me harta interaktive",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#005f3c",
+  "theme_color": "#005f3c",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "images/ic_launcher.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/ic_launcher.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "lifestyle", "travel"],
+  "lang": "sq",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Harta e Haxhit",
+      "short_name": "Harta",
+      "description": "Shiko hartat interaktive të Mekës dhe Medinës",
+      "url": "/index.html#harta",
+      "icons": [{ "src": "images/ic_launcher.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Kohët e Namazit",
+      "short_name": "Namazi",
+      "description": "Kontrollo kohët e namazit",
+      "url": "/index.html#vecorite",
+      "icons": [{ "src": "images/ic_launcher.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Lista e Kontrollit",
+      "short_name": "Lista",
+      "description": "Ndiq progresin e Haxhit",
+      "url": "/index.html#vecorite",
+      "icons": [{ "src": "images/ic_launcher.png", "sizes": "96x96" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "images/hajj_kaaba_1.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "platform": "wide",
+      "label": "Pamja kryesore e aplikacionit"
+    }
+  ]
+}
+
